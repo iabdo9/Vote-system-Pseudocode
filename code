@@ -1,51 +1,44 @@
-// This program will count votes for every candidate, and display the winner // Candidates are:
+// This program will count votes for every candidate, and display the winner
+// Candidates are:
 // 1. Donald Trump
 // 2. Kamala Harris
 // The program will count only valid votes
 // The program will ask for IDs numbers
 // Valid IDs are in the range 1000 - 2000
+
 Module main()
-   Declare Integer currentID, currentGender, vote 
+   Declare Integer currentID, vote
    Declare Boolean anotherVote
    Declare Integer trumpTotal = 0
    Declare Integer harrisTotal = 0
-   call displayInformation()
-   Do
-      Set currentID = getID()
-      Set currentGender = getGender(currentID) 
-      Set vote = getVote()
-      if vote == 1 Then
-         Set trumpTotal = trumpTotal + 1 
-      Else
-         Set harrisTotal = harrisTotal + 1 
-      End if
-      call askAnotherVote(anotherVote) 
-    While anotherVote == true
 
-    call displayWinner() 
+   call displayInformation()   
+   Do
+      call checkID()
+      Set vote = getVote()
+
+      if vote == 1 Then
+         Set trumpTotal = trumpTotal + 1
+      Else
+         Set harrisTotal = harrisTotal + 1
+      End if
+
+      call askAnotherVote(anotherVote)
+    While anotherVote == true
+    
+    call displayWinner()
 End Module
-Module askAnotherVote(Boolean Ref answer) 
-   Declare String adminReply
-   Display "Is there any another vote?" 
-   Display "Type 'Y' for Yes, or leave it blank" 
-   input adminReply
-   Set adminReply = toLower(adminReply)
-   if adminReply == "y" Then
-      Set answer = true
-   Else
-      Set answer = false
-   End if
-End Module()
 
 Module displayInformation()
    Display "This is a voting system"
-   Display "Every user can vote for only one candidate" 
-   Display "Every user must type his ID number and his gender" 
+   Display "Every user can vote for only one candidate"
+   Display "Every user must type his ID number and his gender"
    Display "Candidates are:"
    Display "1. Donald Trump"
    Display "2. Kamala Harris"
 End Module
-function Integer getID()
+
+Module checkID()
    Declare Integer ID
    Declare Boolean error = false
    Display "Please type your ID"
@@ -54,34 +47,49 @@ function Integer getID()
       Set error = true
    End if
    while error == true
-      Display "Your ID number is not correct. IDs numbers are only the Integers in range 1000 - 2000" 
+      Display "Your ID number is not correct. IDs numbers are only the Integers in range 1000 - 2000"
       input ID
-
-      if (ID >= 1000 AND ID <= 2000) Then 
+     
+      if (ID >= 1000 AND ID <= 2000) Then
          Set error = false
       End if
-   End while 
-   return ID 
-End function
+   End while
+   return ID
+End Module
+
 function Integer getVote()
    Declare Integer currentVote
    Display "Choose one of the candidates"
    Display "Enter 1 to choose Trump"
    Display "Enter 2 to choose Harris"
    input currentVote
-   while currentVote != 1 AND currentVote != 2 
-      Display "You choose wrong candidate" 
-      Display "Please Enter 1 for trump or 2 for harris" 
+   while currentVote != 1 AND currentVote != 2
+      Display "You choose wrong candidate"
+      Display "Please Enter 1 for trump or 2 for harris"
       input currentVote
    End while
-   return vote
+   return currentVote
 End function
+
+Module askAnotherVote(Boolean Ref answer)
+   Declare String adminReply
+   Display "Is there any another vote?"
+   Display "Type 'Y' for Yes, or leave it blank"
+   input adminReply
+   Set adminReply = toLower(adminReply)
+   if adminReply == "y" Then
+      Set answer = true
+   Else 
+      Set answer = false
+   End if
+End Module()
+
 Module displayWinner()
    if trumpTotal == harrisTotal Then
       Display "It's a draw"
-   Else if trumpTotal > harrisTotal Then 
-      Display "Trump is the new president of US" 
+   Else if trumpTotal > harrisTotal Then
+      Display "Trump is the new president of US"
    Else
-       Display "Harris is the new president of US" 
+       Display "Harris is the new president of US"
     End if
 End module
